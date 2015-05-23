@@ -9,6 +9,7 @@ object cheese {
     val input = sc.textFile("/home/freyja/cool.txt")
 
     val hiRDD = input.filter(line => line.contains("hi"))
+
     hiRDD.foreach(println)
 
     println("--------")
@@ -21,5 +22,25 @@ object cheese {
     val greetings = hiRDD.union(byeRDD)
 
     greetings.foreach(println)
+
+    println("Better RDD")
+
+    val betterRDD = input.filter(
+      line => List("Hi", "bye").exists(line.contains)
+    )
+
+    val betterRDDVerbose = input.filter(
+      (line: String) => {
+        // runs each itme in the lists until the function within exists returns
+        // true.
+        // the function inside exists checks to see if the line contains n.
+        // n which would be each list item one at a time until true is returned
+        List("Hi", "bye").exists((n) => line.contains(n))
+      }
+    )
+
+    betterRDD.foreach(println)
+    print("=====")
+    betterRDDVerbose.foreach(println)
   }
 }
