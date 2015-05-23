@@ -9,14 +9,13 @@ object commonTrans {
 
     // create RDD from range (1 to 55)
     // could have also List(1,2,3,...55)
-    val i: RDD[Int] = sc.parallelize((1 to 55))
-    // add .5 to each, notice type change
-    val r: RDD[Double] = i.map(x => x + 0.5)
-    // print that stuff out
-    r.foreach(println)
-
-    // alternatively
-    println(r.collect().mkString(", "))
-    println(r.take(10).mkString(", "))
+    val i = sc.parallelize(List(List(1,2,3), List(4,5,6)))
+    val nums = i.flatMap(x => x)
+    nums.foreach(x => {
+      println("--")
+      println(x)
+    })
+    println("======")
+    println(nums.first())
   }
 }
